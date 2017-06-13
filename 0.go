@@ -14,6 +14,8 @@ import (
 	"fmt"
 )
 
+var counter int
+
 func main() {
 	var entry string
 	var static string
@@ -81,11 +83,10 @@ func TickerHandler(w http.ResponseWriter, r *http.Request) {
 // ! ! ! 	BITCOIN ORDER 		 ! ! !
 // ===================================
 func BuyHandler(w http.ResponseWriter, r *http.Request) {
-	var counter int;
 	amount := r.PostForm.Get("btc")		// Amount requested !
 
 	data := map[string]interface{}{
-		"id": fmt.Printf("%d", counter),
+		"id": fmt.Sprintf("%d", counter),
 		"btc": amount,
 		"ts": time.Now().Format(time.RFC3339),
 	}
@@ -96,5 +97,7 @@ func BuyHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+
+	counter++			// The Order Counter
 	w.Write(b)
 }
